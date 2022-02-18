@@ -1,6 +1,6 @@
 name = "IntroJulia"
 uuid = "8e227e49-16cd-4e0c-a0e6-21446c95e351"
-authors = ["andLaing <a.b.r.laing@gmail.com>"]
+authors = ["andLaing <a.b.r.laing@gmail.com> and contributors"]
 version = "0.1.0"
 
 [deps]
@@ -11,3 +11,9 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+julia = "1.6"
+
+[targets]
+test = ["Test"]
