@@ -14,9 +14,6 @@ macro bind(def, element)
     end
 end
 
-# ╔═╡ eefea028-86da-425f-9339-3960ac6e9c6b
-import Pkg
-
 # ╔═╡ 847a880f-d8ea-44c8-af9e-dd716a806381
 begin
 using Markdown
@@ -29,9 +26,6 @@ using Printf
 
 # ╔═╡ e8fae5a2-3386-445c-8be4-bd3b9f151977
 PlutoUI.TableOfContents(title="Pluto: Julia implementation of reactive notebooks", indent=true)
-
-# ╔═╡ cb51eff7-0bdd-4b71-b4e1-59904320c469
-Pkg.status()
 
 # ╔═╡ b129ba7c-953a-11ea-3379-17adae34924c
 md"""# _Reactive Notebooks_
@@ -65,7 +59,7 @@ In a reactive notebook hidden state does not exist. This means that the notebook
   
 ```
 
-The result is x =1. BTW, if you try *println* the output will not go to the notebook but to the terminal. This is a somewhat weird quirck of Pluto (nobody's perfect).
+The result is x =1. BTW, if you try *println* the output will not go to the notebook but to the terminal. This is a somewhat weird quirk of Pluto (nobody's perfect).
 
 Also, if you try to write the above two sentences in the same cells Pluto will complain. The convention in Pluto requires that you write either one sentence per cell of enclose multiple sentences in begin... end blocks. 
 
@@ -149,18 +143,137 @@ Pluto lets you `@bind` variables to HTML elements. As always, every time you cha
 # ╔═╡ f2c79746-9554-11ea-39ca-298fd09248ad
 @bind rangevar html"<input type='range'>"
 
-# ╔═╡ 041cbbb1-9ce1-4997-9ffa-3545beb238b8
-rangevar
-
 # ╔═╡ 9cbb36e1-61bd-4439-9f18-58e466f2cc79
 md" The power level is $rangevar"
+
+# ╔═╡ 3e5a0d51-a849-42f0-9a2c-b8e1a5d2a15e
+md"## Input types
+
+You can use _any_ DOM element that fires an `input` event. For example:"
+
+# ╔═╡ 85f7a276-e13f-4bf1-a908-fca032894a16
+md"""
+`a = ` $(@bind a html"<input type=range >")
+
+`b = ` $(@bind b html"<input type=text >")
+
+`c = ` $(@bind c html"<input type=button value='Click'>")
+
+`d = ` $(@bind d html"<input type=checkbox >")
+
+`e = ` $(@bind e html"<select><option value='one'>First</option><option value='two'>Second</option></select>")
+
+`f = ` $(@bind f html"<input type=color >")
+
+"""
+
+# ╔═╡ b3f3cec1-dc46-4bba-becc-bedba8b057f9
+md"""
+a = $a
+
+b = $b
+
+c = $c
+
+d = $d
+
+e = $e
+"""
+
+# ╔═╡ 7a89f893-b605-47a6-8f17-ab4f57ce49ef
+md"""
+## PlutoUI 
+
+PlutoUI is a package that offers syntactic sugar to bind variables. To use it (as in this notebook) you need to include the line
+
+`using PlutoUI`
+
+See below some examples of use:
+"""
+
+# ╔═╡ 0e42e132-94cc-48c2-aaf7-ef81c2075f16
+md""" ### A Slider
+"""
+
+# ╔═╡ f843be72-64de-427e-a3bf-202ce217f517
+@bind xs Slider(5:15)
+
+# ╔═╡ 1443687f-0052-49ca-a9d2-746dcf78763b
+md" You have selected a slider value of  $xs"
+
+# ╔═╡ 3dca2d86-45d2-4b75-9511-8a1a6f943c4e
+md""" ### A Slider with range and default
+"""
+
+# ╔═╡ a42c49a7-ccf7-4867-a3d4-0f9dcc33f9ed
+@bind ys Slider(20:0.1:30, default=25.5)
+
+# ╔═╡ 255a6968-f4c4-4991-a789-5d926ccc0f6f
+md" ou have selected a slider value of $ys"
+
+# ╔═╡ 04c43494-30a0-4803-a4a0-3456cd30d93b
+md"### A number field"
+
+# ╔═╡ 789901e3-11ce-4626-aa75-9f4b8d4a574d
+@bind xnf NumberField(0:100, default=20)
+
+# ╔═╡ b03d72be-dd76-4fc1-83ca-af041d3322cc
+md" Your number field is $xnf"
+
+# ╔═╡ 4aeed70b-73c9-4118-aafd-55e2c714896b
+md"### A Text field"
+
+# ╔═╡ f522f5ec-f4fa-4b0e-89ac-e2a8a5a027b4
+@bind s TextField()
+
+# ╔═╡ 261fc14a-6d0b-4d84-9841-1192f6ca9e3c
+md" Your number field is $s"
+
+# ╔═╡ 44b2f35a-1f47-415e-9066-5c2b8bb10f9c
+md"### A check box"
+
+# ╔═╡ 2f680d11-71ca-4232-9074-7643284b4b17
+@bind cb CheckBox(default=true)
+
+# ╔═╡ 0ca3f7be-0979-4993-bc36-3a5d73a3c580
+md" The value of your check box is $cb"
+
+# ╔═╡ 0f643ba3-cd7d-4096-857a-a97838e760f2
+md"### Select"
+
+# ╔═╡ d2f4ce05-1a96-4177-9170-4cb1a22ab2bf
+@bind futbol Select(["Real Madrid", "Barça"])
+
+# ╔═╡ 7ac02d39-759d-446e-b7ba-09b69ba9ef48
+md" Your favourite soccer team is $futbol"
+
+# ╔═╡ 0a56c5e0-7a0a-48e3-bd47-92614227fffa
+md"### Buttom"
+
+# ╔═╡ 2dcdee28-199e-4e76-b774-4b39a69b7043
+@bind go Button("Trigger")
+
+# ╔═╡ ad90f827-752b-4584-b5f3-dc7bd258e9b6
+md" State of Buttom = $go"
+
+# ╔═╡ b9458bd0-64f3-4bd4-96f5-705ab87ed0fe
+md"### Buttom as a reactive trigger
+
+Try clicking several times in `Trigger`
+"
+
+# ╔═╡ 7207081f-1fac-4cb0-a15e-8cadb9f34d21
+let
+	go
+	
+	md" Only $(rand(1:15)) minutes left to midnight!"
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
-Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
@@ -378,19 +491,43 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═847a880f-d8ea-44c8-af9e-dd716a806381
 # ╠═0c448718-8c3d-462b-8a6c-8e28d17849c5
 # ╠═e8fae5a2-3386-445c-8be4-bd3b9f151977
-# ╠═eefea028-86da-425f-9339-3960ac6e9c6b
-# ╠═cb51eff7-0bdd-4b71-b4e1-59904320c469
-# ╠═b129ba7c-953a-11ea-3379-17adae34924c
-# ╠═b267cd55-009e-4da2-832b-1e98dfdd2759
+# ╟─b129ba7c-953a-11ea-3379-17adae34924c
+# ╟─b267cd55-009e-4da2-832b-1e98dfdd2759
 # ╠═d2713ff7-41a9-4c67-ba28-99f29687fab1
 # ╠═a7068203-02ac-40a1-ac35-c78f4ab20cb6
-# ╠═d593ca03-3504-4f3f-bd96-15d949f8824c
+# ╟─d593ca03-3504-4f3f-bd96-15d949f8824c
 # ╠═3bc3a5fc-2ed7-4894-b9ad-6e3e8b50f382
-# ╠═952d4797-dd4c-46a0-b54a-d72de23dca17
+# ╟─952d4797-dd4c-46a0-b54a-d72de23dca17
 # ╠═1aeffd56-06e8-4c69-84ee-d70894a79861
-# ╠═3150bf1a-9555-11ea-306f-0fd4d9229a51
+# ╟─3150bf1a-9555-11ea-306f-0fd4d9229a51
 # ╠═f2c79746-9554-11ea-39ca-298fd09248ad
-# ╠═041cbbb1-9ce1-4997-9ffa-3545beb238b8
 # ╠═9cbb36e1-61bd-4439-9f18-58e466f2cc79
+# ╟─3e5a0d51-a849-42f0-9a2c-b8e1a5d2a15e
+# ╟─85f7a276-e13f-4bf1-a908-fca032894a16
+# ╟─b3f3cec1-dc46-4bba-becc-bedba8b057f9
+# ╟─7a89f893-b605-47a6-8f17-ab4f57ce49ef
+# ╟─0e42e132-94cc-48c2-aaf7-ef81c2075f16
+# ╟─f843be72-64de-427e-a3bf-202ce217f517
+# ╟─1443687f-0052-49ca-a9d2-746dcf78763b
+# ╟─3dca2d86-45d2-4b75-9511-8a1a6f943c4e
+# ╟─a42c49a7-ccf7-4867-a3d4-0f9dcc33f9ed
+# ╟─255a6968-f4c4-4991-a789-5d926ccc0f6f
+# ╟─04c43494-30a0-4803-a4a0-3456cd30d93b
+# ╟─789901e3-11ce-4626-aa75-9f4b8d4a574d
+# ╟─b03d72be-dd76-4fc1-83ca-af041d3322cc
+# ╟─4aeed70b-73c9-4118-aafd-55e2c714896b
+# ╟─f522f5ec-f4fa-4b0e-89ac-e2a8a5a027b4
+# ╟─261fc14a-6d0b-4d84-9841-1192f6ca9e3c
+# ╟─44b2f35a-1f47-415e-9066-5c2b8bb10f9c
+# ╟─2f680d11-71ca-4232-9074-7643284b4b17
+# ╟─0ca3f7be-0979-4993-bc36-3a5d73a3c580
+# ╟─0f643ba3-cd7d-4096-857a-a97838e760f2
+# ╟─d2f4ce05-1a96-4177-9170-4cb1a22ab2bf
+# ╟─7ac02d39-759d-446e-b7ba-09b69ba9ef48
+# ╟─0a56c5e0-7a0a-48e3-bd47-92614227fffa
+# ╟─2dcdee28-199e-4e76-b774-4b39a69b7043
+# ╟─ad90f827-752b-4584-b5f3-dc7bd258e9b6
+# ╟─b9458bd0-64f3-4bd4-96f5-705ab87ed0fe
+# ╟─7207081f-1fac-4cb0-a15e-8cadb9f34d21
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
