@@ -34,7 +34,7 @@ Pluto implements the concept of **reactive notebook** for the _Julia_ programmin
 
 A reactive notebook is a notebook that is always kept up-to-date. So whenever its code is changed or a cell is deleted or moved, the notebook's outputs are automatically updated as if the notebook was executed fresh, from top to bottom.
 
-Consider for example what happens if you run a Jupyter notebook with the following code (the code is in the notebook _hiddenState1.ipynb_ in this directory)
+Consider for example what happens if you run a Jupyter notebook with the following code:
 
 ```
 	> cell 1: x = 1
@@ -68,7 +68,7 @@ Now, suppose you want to change the state of x, writing a new cell below the two
 
 	> x = 2
  
- Yes, you get an error *Multiple definitions for x*. Pluto has binded the variable x to the value 1 and will not let you change its value. In other words, variable are **inmutable** in Pluto. This solves the most obvious case of hidden state. 
+ Yes, you get an error *Multiple definitions for x*. Pluto has binded the variable x to the value 1 and will not let you change its value. In other words, variables are **inmutable** in Pluto. This solves the most obvious case of hidden state. 
  
  Consider now a more subtle case: define the function:
  
@@ -525,7 +525,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─d2f4ce05-1a96-4177-9170-4cb1a22ab2bf
 # ╟─7ac02d39-759d-446e-b7ba-09b69ba9ef48
 # ╟─0a56c5e0-7a0a-48e3-bd47-92614227fffa
-# ╟─2dcdee28-199e-4e76-b774-4b39a69b7043
+# ╠═2dcdee28-199e-4e76-b774-4b39a69b7043
 # ╟─ad90f827-752b-4584-b5f3-dc7bd258e9b6
 # ╟─b9458bd0-64f3-4bd4-96f5-705ab87ed0fe
 # ╟─7207081f-1fac-4cb0-a15e-8cadb9f34d21

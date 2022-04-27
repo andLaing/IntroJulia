@@ -4,6 +4,16 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+end
+
 # ╔═╡ 867989c7-b57c-4a53-a2a1-a5602d9420df
 using PlutoUI
 
@@ -23,7 +33,7 @@ md"""
 
 # ╔═╡ 0d60f5d5-53d6-4014-af00-7a8b27a4a6a4
 md"""
-A funny quick of Pluto is that stdoutput goes to the terminal, not to the notebook. Thus, if you use the function 'println()' for example, nothing will appear in the notebook but the result will be displayed in the terminal you launched Pluto from
+A funny quirck of Pluto is that stdoutput goes to the terminal, not to the notebook. Thus, if you use the function 'println()' for example, nothing will appear in the notebook but the result will be displayed in the terminal you launched Pluto from
 """
 
 # ╔═╡ c744a498-9d13-4dc3-9ede-e62190c72877
@@ -58,7 +68,7 @@ Remember that in Pluto variable are immutable. Thus if you assign a variable
 
 `my_variable = 69`
  
-then you cannot later do
+then you cannot do in another cell:
  
 `my_variable = 100.`
 
@@ -69,21 +79,63 @@ You will get an error message: `Multiple definitions for my_variable.`
 # ╔═╡ 94058bf4-29d1-4aeb-8f0f-252f0033560e
 my_variable = 69
 
+# ╔═╡ 8052538f-12f3-46e4-b9e9-25310e0cc787
+#my_variable = 100
+
 # ╔═╡ e13ebcee-cbaf-408b-9d77-3c84341fd187
-md" Try and change the value of `my_variable` above and see what happens."
+md" Uncomment the cell above and see what happens."
 
 # ╔═╡ aa4c31cf-b6c1-4bd7-a678-b3a7252ce215
 md"""
 You can find the type of your variable with `typeof()`
 """
 
+# ╔═╡ dafdbdce-4689-4515-a0ef-0d80319a247f
+md"""
+If you define all your variables in the global scope (this is the default case), you will end up writing a large number of names (e.g., `my_variable1`, `my_variable2`) due to the inmutability rule. This may be inconvenient. However, many of the variables you need in a notebook are local (think of them as local to a function). Using let... end blocks allows you to reuse names.
+"""
+
+# ╔═╡ 9914d6c7-a94c-4a96-92fc-fe6f11a55212
+let
+	x = 7
+	y = x^2
+	my_variable = x +y
+	md"""
+Here, inside the let block the value of `my_variable` is $my_variable and its type is $(typeof(my_variable))
+"""
+end
+
+# ╔═╡ 446722a6-e08e-4bfa-9ba5-ed5518c1ef25
+md"""
+Here, outside the let block the value of `my_variable` is still $my_variable and its type is still $(typeof(my_variable)). This is because the definition of `my_variable` (the last variable in the let block) gets exported to the global scope
+"""
+
+# ╔═╡ 7ffb251d-a155-44fb-a0d5-75d5c33a4c9d
+let
+	x = 0.5
+	y = x^3
+	my_variable = x +y
+	md"""
+Here, inside the new let block the value of `my_variable` has changed to $my_variable and its type to $(typeof(my_variable)). Notice that I am also redefining `x` and `y`. This is no problem, because all of them are local to the block. 
+"""
+end
+
 # ╔═╡ 8addc85a-bfad-45d0-b9e2-3ef53f2b73ee
-typeof(my_variable)
+md"""
+Here, I am back to the global scope. The value of `my_variable` is $my_variable and its type is $(typeof(my_variable)). What do you think are the values of `x` and `y`? Check the box to find out $(@bind doxy CheckBox(default=false))
+"""
+
+# ╔═╡ 4a64f90c-f24e-4e08-b6b8-bca655228aef
+if doxy
+	md"""
+variables `x` and `y` are local to the let...end block and thus are not defined in the global scope. If you try to invoke them you will get an error. Try to write `x` in a cell below and see what happens
+	"""
+end
 
 # ╔═╡ 9b4c14c7-3d73-417f-aa8a-d2d1158434c5
 md"""
 
-And of course you can interpolate everything, like below:
+## A bit more on interpolation:
 
 The type of $(my_variable) is $(typeof(my_variable))
 
@@ -123,8 +175,20 @@ typeof(string_my_variable)
 # ╔═╡ 6ce94093-c5ba-42b1-af65-28bafec12b72
 md"""
 
-But of course the type of `string_my_variable` is String. Do you think you can cast the variable back to Int or Float?
+But of course the type of `string_my_variable` is String. Do you think you can cast the variable back to Int or Float? Check the box to find out $(@bind doparse CheckBox(default=false))
 """
+
+# ╔═╡ 76330c85-34db-44f2-af47-0e81f61317af
+if doparse
+	
+	md"""
+You can use the parse function to turn a string into an Integer or a Float
+	
+- `parse(Int64, string_my_variable)` => $(parse(Int64, string_my_variable))
+- `parse(Float64, string_my_variable)` => $(parse(Float64, string_my_variable))
+	"""
+	
+end
 
 # ╔═╡ 70b8c375-c4a2-42f5-8ca2-bb42e9a37ab5
 md"""
@@ -161,18 +225,13 @@ The ceiling of $pi is $(ceil(pi))
 The floor of $pi is $(floor(pi))
 """
 
-# ╔═╡ 4d50b919-41f6-4c9d-93b0-c10ad978baa5
+# ╔═╡ f23b022d-2afe-4acf-bf39-3ddcb4c391fe
 begin
 	people = 10
 	avg = 2.5
 	slices = 8
 	pizzaWrongGuess = 1
 	pizzas = pizzaWrongGuess
-	
-	md"I have defined the values of people, avg and slices for you. The value of pizzas I have written down (**pizzas = $(pizzaWrongGuess)**) is not correct on purpose, please replace if by the right value (Warning: you need to *replace* the value **pizzas = $(pizzaWrongGuess)** by something else. If you try to write a new values for **pizzas** in another cell you will get an error. Remember, variables in Pluto (not in Julia) are inmmutable).
-
- 	As you can see below, the red square claims that the answer is not correct (it is not, the guess I have written down is wrong on purpose). Once you find the right value of **pizzas** magic will occur, thanks to cool functions defined at the end of this notebook. Enjoy it. 
-	"
 end
 
 # ╔═╡ a71739cb-f275-4dab-85a3-2d23c917453e
@@ -191,6 +250,15 @@ Number of slices on a piece of pizza | slices
 
 
 """
+
+# ╔═╡ 4d50b919-41f6-4c9d-93b0-c10ad978baa5
+begin
+	md"""
+I have defined in the cell below the values of people, avg and slices for you. The value of pizzas I have written down (**pizzas = $(pizzaWrongGuess)**) is not correct on purpose, please replace if by the right value (Warning: you need to *replace* the value **pizzas = $(pizzaWrongGuess)** by something else. If you try to write a new values for **pizzas** in another cell you will get an error. Remember, variables in Pluto (not in Julia) are inmmutable).
+
+ As you can see below, the red square claims that the answer is not correct (it is not, the guess I have written down is wrong on purpose). Once you find the right value of **pizzas** magic will occur, thanks to cool functions defined at the end of this notebook. Enjoy it. 
+	"""
+end
 
 # ╔═╡ 50be58f7-a9ea-4c79-8f28-2b60cb1efe1a
 md"""
@@ -444,9 +512,6 @@ md"""
 Since arrays are mutable structures it is possible to update its elements. 
 """
 
-# ╔═╡ 15a4ebc2-ae79-4aed-a5cb-9e1a6544f28a
-A3D
-
 # ╔═╡ f35c81d4-6e8c-4271-9655-60f573a22c26
 A3D[1,1,1] = 10;
 
@@ -546,27 +611,36 @@ hvcat((2, 2), xa, xb, xc, xd)
 md"""
 ### Copying arrays
 
-By default, arrays are assigned by reference:
+By default, arrays are assigned by reference: Let's recall that the value of A3D is
 """
 
-# ╔═╡ a7c5ec78-10ba-45da-baf8-593d974ecbb6
+# ╔═╡ a249edf7-e6e9-4fc4-b072-a3d6432e4cfd
+A3D
+
+# ╔═╡ 98a4b835-f576-4cc9-a0e7-8e90bcd719bb
+md" Let us know define `B3D` as a reference to `A3D`"
+
+# ╔═╡ 4397f143-7a93-4cdc-a6a8-542c61eeca54
 B3D = A3D
 
 # ╔═╡ f6a47bd4-9b96-43bb-9e57-cda9d01ce442
-md"`B3D` is a reference to `A3D`. Let's now change `B3D`"
+md"Check the box to change `B3D` and display its new value $(@bind dob3d CheckBox(default=false)) "
 
 # ╔═╡ 0dca9cfc-a817-458b-91e2-12672726e11e
-begin
+if dob3d
 	B3D[1,1,1] = 1
 	B3D[:,:,2] = hvcat((2, 2), 5, 6, 7, 8) 
 	B3D
 end
 
 # ╔═╡ e2a2d49c-89da-47c1-ac02-53cc2b87889e
-md"Can you guess what happened to `A3D`?"
+md"Can you guess what happened to `A3D`? Check the box to find out the value of A3D $(@bind doa3d CheckBox(default=false))"
 
 # ╔═╡ 3c89bdad-2779-4c0d-ad9c-726438a64273
-A3D
+
+md"""Ooops! `A3D` has also changed, since `B3D` who was a reference to it changed. So if you want to avoid chaning the original array (at the expense of time invested in copying) use function `copy`. This is the value of A3D"""
+	
+
 
 # ╔═╡ 7346873e-a22e-46a4-9eb6-fad6b5713aa0
 md"Ooops! `A3D` has also changed, since `B3D` who was a reference to it changed. So if you want to avoid chaning the original array (at the expense of time invested in copying) use function `copy`"
@@ -574,12 +648,22 @@ md"Ooops! `A3D` has also changed, since `B3D` who was a reference to it changed.
 # ╔═╡ 65a09c10-d2d1-408e-8616-952b3e2c165b
 C3D = copy(A3D)
 
+# ╔═╡ 5cd817ea-6773-4226-96a0-e90055db9c23
+md"""
+`C3D` contains a copy of `A3D` (so is not a reference to it). Lets change the value of `C3D`
+"""
+
 # ╔═╡ c90ca787-029f-4460-92d7-96d563472c5b
 begin
 	C3D[1,1,1] = 10
 	C3D[:,:,2] = hvcat((2, 2), 50, 60, 70, 80) 
 	C3D
 end
+
+# ╔═╡ 2ea0cfde-d2bf-4c36-b094-1659a1d742ec
+md"""
+`C3D` has changed, but `A3D` has still the value that we got above
+"""
 
 # ╔═╡ e8ab6679-d64b-4ea3-8b58-5909d089b388
 A3D
@@ -784,7 +868,7 @@ As an example let's create an addition tables, where the value of every entry is
 
 Note that we iterate over this array via column-major loops in order to get the best performance. More information about fast indexing of multidimensional arrays inside nested loops can be found [here] (https://docs.julialang.org/en/v1/manual/performance-tips/#Access-arrays-in-memory-order,-along-columns-1).
 
-First, we initialize the array with zeros using the hand function `fill`.
+First, we initialize the array with zeros using the handy function `fill`.
 """
 
 # ╔═╡ 7f26e989-656c-4c71-af49-2c66cf374380
@@ -910,7 +994,7 @@ And see its application:
 coolf("warning", "This is grey condition", md"The system works but fixes may be necessary")
 
 # ╔═╡ 1f52b11f-3a3a-41a0-9313-3b4280661ebe
-coolf("correct", "This is blue condition", md"All systems work")
+coolf("correct", "This is green condition", md"All systems work")
 
 # ╔═╡ eaaa9648-2398-42d1-8d2d-f480c182487a
 coolf("danger", "This is red condition", md"All systems red")
@@ -1358,30 +1442,38 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═85d79e69-faf6-42cf-9e70-00e4e6a517a6
 # ╟─6452d551-eae6-410f-a824-0d66aeec048b
 # ╟─9cb0b62b-1f52-452b-b895-a1174d834896
-# ╟─0d60f5d5-53d6-4014-af00-7a8b27a4a6a4
+# ╠═0d60f5d5-53d6-4014-af00-7a8b27a4a6a4
 # ╠═c744a498-9d13-4dc3-9ede-e62190c72877
 # ╟─2c8e97e9-1bd3-4c39-939a-62f621f62929
 # ╠═2c44ff3a-bb46-40d1-829e-17fd2b56daab
 # ╠═dda18475-3f32-4e05-be03-518abb492a91
 # ╠═9092c9cf-d7aa-4eb6-a511-e1dd738ad488
 # ╟─a8d159d1-b820-48ed-a522-fab17ce897ee
-# ╟─03e6bd29-4907-4807-984f-8d20ec1e0f7e
+# ╠═03e6bd29-4907-4807-984f-8d20ec1e0f7e
 # ╠═94058bf4-29d1-4aeb-8f0f-252f0033560e
-# ╟─e13ebcee-cbaf-408b-9d77-3c84341fd187
+# ╠═8052538f-12f3-46e4-b9e9-25310e0cc787
+# ╠═e13ebcee-cbaf-408b-9d77-3c84341fd187
 # ╟─aa4c31cf-b6c1-4bd7-a678-b3a7252ce215
-# ╠═8addc85a-bfad-45d0-b9e2-3ef53f2b73ee
+# ╟─dafdbdce-4689-4515-a0ef-0d80319a247f
+# ╠═9914d6c7-a94c-4a96-92fc-fe6f11a55212
+# ╠═446722a6-e08e-4bfa-9ba5-ed5518c1ef25
+# ╠═7ffb251d-a155-44fb-a0d5-75d5c33a4c9d
+# ╟─8addc85a-bfad-45d0-b9e2-3ef53f2b73ee
+# ╟─4a64f90c-f24e-4e08-b6b8-bca655228aef
 # ╟─9b4c14c7-3d73-417f-aa8a-d2d1158434c5
-# ╠═589c2d44-e309-4c2b-8c0e-e90f7299982e
+# ╟─589c2d44-e309-4c2b-8c0e-e90f7299982e
 # ╠═d16099c4-1004-4354-9fab-dbb2c748414d
 # ╟─fe35a4e4-339c-4621-8fd0-a869ca997800
 # ╠═921d1e6c-28be-4dc0-9a42-e0c8da8c0211
 # ╠═1f55905c-889c-42d8-abf8-4b0cfb47f694
 # ╠═6ce94093-c5ba-42b1-af65-28bafec12b72
+# ╟─76330c85-34db-44f2-af47-0e81f61317af
 # ╠═70b8c375-c4a2-42f5-8ca2-bb42e9a37ab5
-# ╠═5bcd7d59-b1b8-49bb-821c-47b441c3260d
+# ╟─5bcd7d59-b1b8-49bb-821c-47b441c3260d
 # ╟─8fb3aad2-ca3e-4f02-b058-c23c523f2b52
 # ╟─a71739cb-f275-4dab-85a3-2d23c917453e
 # ╟─4d50b919-41f6-4c9d-93b0-c10ad978baa5
+# ╠═f23b022d-2afe-4acf-bf39-3ddcb4c391fe
 # ╟─5b43cb05-d7f8-417f-9d72-dca740020f0e
 # ╠═50be58f7-a9ea-4c79-8f28-2b60cb1efe1a
 # ╟─e377dc75-6636-45e7-8425-97881099de5c
@@ -1398,7 +1490,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─448cdb0b-5f2f-43c6-80e7-02f3d090d26a
 # ╠═5b60dc81-d169-4b7a-88c7-41b50ea4af49
 # ╠═3196ff4d-dda5-4b5e-b81e-856a90ad54ad
-# ╠═bc2e835c-e901-4fb9-b01b-98c1148f8a53
+# ╟─bc2e835c-e901-4fb9-b01b-98c1148f8a53
 # ╟─744d76ac-dd22-49fd-982a-722feca1803a
 # ╠═75ccd60e-6618-40b6-91cb-d82127a19784
 # ╠═17a18aa3-2542-442a-8285-c423fe67175b
@@ -1408,7 +1500,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═e51174e2-f32b-4ac3-ae7c-f4d114d304c6
 # ╠═c4b2086b-cb8b-4607-9271-9c85a7ab6366
 # ╠═bd4a7266-e6b5-43bf-a5fa-9c7373808e84
-# ╠═a11bc63d-dcc8-4c11-a098-3e4a356d0946
+# ╟─a11bc63d-dcc8-4c11-a098-3e4a356d0946
 # ╠═3ef683e4-06cd-4e3b-b0e4-28acacb638d7
 # ╠═5ae2c705-cca2-4ff7-b675-499dcdb3c697
 # ╠═893e11fb-0e63-44bd-8dd9-73c916735d13
@@ -1423,13 +1515,13 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═e7bfe48d-7d29-4a61-96d2-56ef5231c7f1
 # ╠═94338b6f-5332-4e42-a533-6d96a6054baf
 # ╠═1d8441e5-d866-44a1-9fc2-d3e1afd7a352
-# ╠═d1bfd9a4-308e-4df4-ac23-75655e5ae23f
+# ╟─d1bfd9a4-308e-4df4-ac23-75655e5ae23f
 # ╠═b0f4df4d-92cc-4160-b252-2568fd1ce212
 # ╠═8382da83-40a6-4217-952d-4f30e252d077
 # ╟─9ad1712b-1ac4-4d3e-a07e-6a71e2ce2211
 # ╠═c9732c0b-1632-4faf-9d4d-ddce3943f733
 # ╠═7a9ab539-a483-4732-b1e6-e533eee5f976
-# ╠═7c210f37-3e77-4799-89af-48b44b356687
+# ╟─7c210f37-3e77-4799-89af-48b44b356687
 # ╠═2cc6a911-4767-4ab1-baea-129318a3c0a9
 # ╠═5796b9ab-c4de-476c-8641-2998cf2d2dca
 # ╟─315d2f8b-e699-495e-8682-5480c5e6947d
@@ -1441,7 +1533,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═643c9552-3002-4a23-84b8-382dda452b5c
 # ╠═7a4fa05a-c2eb-48d9-865c-918bd5759e55
 # ╟─6bd1f0e7-ab76-4ebb-b070-6f6ffe469b40
-# ╠═15a4ebc2-ae79-4aed-a5cb-9e1a6544f28a
 # ╠═f35c81d4-6e8c-4271-9655-60f573a22c26
 # ╠═efd27e77-c0bf-498c-9f6f-bc863526fa51
 # ╠═4dc83d7c-5b7e-48df-9ba1-49a818363d8e
@@ -1468,32 +1559,36 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═c9ce2286-5bb6-41df-b387-3ebaa01ff906
 # ╟─02a9d429-d55f-4c1b-a4af-f580379826e4
 # ╠═22c22571-fbae-4694-ba9a-fefdb812f267
-# ╟─36cbdba6-5f9c-40fa-97b5-15da83b50a09
-# ╠═a7c5ec78-10ba-45da-baf8-593d974ecbb6
-# ╟─f6a47bd4-9b96-43bb-9e57-cda9d01ce442
-# ╠═0dca9cfc-a817-458b-91e2-12672726e11e
+# ╠═36cbdba6-5f9c-40fa-97b5-15da83b50a09
+# ╠═a249edf7-e6e9-4fc4-b072-a3d6432e4cfd
+# ╠═98a4b835-f576-4cc9-a0e7-8e90bcd719bb
+# ╠═4397f143-7a93-4cdc-a6a8-542c61eeca54
+# ╠═f6a47bd4-9b96-43bb-9e57-cda9d01ce442
+# ╟─0dca9cfc-a817-458b-91e2-12672726e11e
 # ╟─e2a2d49c-89da-47c1-ac02-53cc2b87889e
-# ╠═3c89bdad-2779-4c0d-ad9c-726438a64273
-# ╟─7346873e-a22e-46a4-9eb6-fad6b5713aa0
+# ╟─3c89bdad-2779-4c0d-ad9c-726438a64273
+# ╠═7346873e-a22e-46a4-9eb6-fad6b5713aa0
 # ╠═65a09c10-d2d1-408e-8616-952b3e2c165b
+# ╟─5cd817ea-6773-4226-96a0-e90055db9c23
 # ╠═c90ca787-029f-4460-92d7-96d563472c5b
+# ╟─2ea0cfde-d2bf-4c36-b094-1659a1d742ec
 # ╠═e8ab6679-d64b-4ea3-8b58-5909d089b388
-# ╠═af05de92-535a-4228-a721-76f82946b3ec
-# ╠═2c6dac28-fbc8-4f26-a765-c214916fc01b
+# ╟─af05de92-535a-4228-a721-76f82946b3ec
+# ╟─2c6dac28-fbc8-4f26-a765-c214916fc01b
 # ╠═28b2379d-8b80-44eb-a73d-78f58dfb353e
 # ╠═0e325443-3f28-4782-9028-dc6c0417dfea
-# ╠═baf6cc4d-561e-4789-82eb-f841f7cc9e4b
+# ╟─baf6cc4d-561e-4789-82eb-f841f7cc9e4b
 # ╠═4f7dcd44-66f6-4de5-af96-efbfa14467f1
-# ╠═1968f2c3-1962-4b55-88f7-b50ad0c9c583
+# ╟─1968f2c3-1962-4b55-88f7-b50ad0c9c583
 # ╠═7171fa3b-78b2-44d6-9a38-b84632fd1cd4
 # ╠═bde77270-c229-4dba-a49a-fe4d9ac6a72d
 # ╠═78e76756-9606-479e-93e2-395f659c0d8a
-# ╠═b2feb05d-a4c5-4ab6-a46f-8bbe49614c9f
+# ╟─b2feb05d-a4c5-4ab6-a46f-8bbe49614c9f
 # ╠═2806e434-624d-403d-a20c-94a2a5d04cf3
 # ╠═4918b995-5a70-4710-9db5-30f2d6d472d4
 # ╠═b58ba9a0-ea1b-4a0e-881d-234049d9fd26
 # ╟─5ed29145-a255-4128-beb0-df42a64f2428
-# ╟─ac523ee2-ce6d-47b6-8cdc-2e0383889395
+# ╠═ac523ee2-ce6d-47b6-8cdc-2e0383889395
 # ╟─06153258-a4a1-4687-96ea-be1a59968fed
 # ╟─f8fddd22-6b9b-4b3e-9165-5368080dc19d
 # ╟─59beabdd-6964-499a-9c9c-62bc96f94c41
@@ -1511,7 +1606,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═1b754152-e5f6-4c59-bb32-7f6dd63ce5c5
 # ╠═cc1dc0bd-2a13-4179-94d9-3c3905bb552f
 # ╠═04355f6f-4003-4100-b040-b49b7f319f00
-# ╠═c353c837-f5fc-474c-9103-ed3f6898d513
+# ╟─c353c837-f5fc-474c-9103-ed3f6898d513
 # ╠═b37ca7c8-b507-4a57-a4cb-8a0d56a560d3
 # ╠═70d89005-e2ac-4596-8700-032460f304d0
 # ╟─a8f188cb-aa6e-492d-ad67-f9ce108ad841
@@ -1523,10 +1618,10 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═e917fbae-b6d7-4708-b5fe-7c729e8a56eb
 # ╟─c33ea1b5-0b32-4c2b-a1fc-4e470ed7807a
 # ╠═06627f1f-0cd4-4512-b69d-e7c3215586a9
-# ╠═6bd9acf1-7d2a-4047-b46b-f93befd5956d
+# ╟─6bd9acf1-7d2a-4047-b46b-f93befd5956d
 # ╠═2effc425-2819-4291-9fd8-2e805c2d09e8
-# ╠═0c569d35-f402-4c18-a9ba-8367e48e3e70
-# ╠═5d4167cb-80dd-4f52-8373-e71ba4d55000
+# ╟─0c569d35-f402-4c18-a9ba-8367e48e3e70
+# ╟─5d4167cb-80dd-4f52-8373-e71ba4d55000
 # ╟─eb0d2b75-9809-4c81-84ed-cd9048e8b62d
 # ╠═ba42e2f3-876b-492f-b15b-ade14de59dbc
 # ╠═0ad312a4-d7c8-4074-b0f1-b83191b3d267
@@ -1570,11 +1665,11 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═9f644b86-5801-444d-b470-6b75d0871bd5
 # ╠═c7c85ce4-d529-4b7e-9b90-e91b1985ad52
 # ╟─133de5fe-2ac0-4fd1-96a8-6bbb572b8860
-# ╠═d82b7825-991d-4384-9229-c97063857447
+# ╟─d82b7825-991d-4384-9229-c97063857447
 # ╠═6e3414f4-c090-4956-86c6-c685d1c5b425
 # ╠═5e490d3f-cd2f-4b4b-9cd0-01d2409fe023
 # ╠═13c8e7e3-6c16-4aaf-a610-dc7689f9ef05
-# ╠═160d160d-9196-43a2-be59-2fbce7ba504b
+# ╟─160d160d-9196-43a2-be59-2fbce7ba504b
 # ╠═21777ceb-6c49-4c22-a2cc-f0e5e3a7aa99
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
