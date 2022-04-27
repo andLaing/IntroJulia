@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.18.0
+# v0.18.1
 
 using Markdown
 using InteractiveUtils
@@ -248,16 +248,16 @@ md"### Select"
 md" Your favourite soccer team is $futbol"
 
 # ╔═╡ 0a56c5e0-7a0a-48e3-bd47-92614227fffa
-md"### Buttom"
+md"### Button"
 
 # ╔═╡ 2dcdee28-199e-4e76-b774-4b39a69b7043
 @bind go Button("Trigger")
 
 # ╔═╡ ad90f827-752b-4584-b5f3-dc7bd258e9b6
-md" State of Buttom = $go"
+md" State of Button = $go"
 
 # ╔═╡ b9458bd0-64f3-4bd4-96f5-705ab87ed0fe
-md"### Buttom as a reactive trigger
+md"### Button as a reactive trigger
 
 Try clicking several times in `Trigger`
 "
@@ -285,7 +285,7 @@ PlutoUI = "~0.7.37"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.2"
+julia_version = "1.7.1"
 manifest_format = "2.0"
 
 [[deps.AbstractPlutoDingetjes]]
@@ -526,7 +526,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─7ac02d39-759d-446e-b7ba-09b69ba9ef48
 # ╟─0a56c5e0-7a0a-48e3-bd47-92614227fffa
 # ╠═2dcdee28-199e-4e76-b774-4b39a69b7043
-# ╟─ad90f827-752b-4584-b5f3-dc7bd258e9b6
+# ╠═ad90f827-752b-4584-b5f3-dc7bd258e9b6
 # ╟─b9458bd0-64f3-4bd4-96f5-705ab87ed0fe
 # ╟─7207081f-1fac-4cb0-a15e-8cadb9f34d21
 # ╟─00000000-0000-0000-0000-000000000001

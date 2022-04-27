@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.18.0
+# v0.18.1
 
 using Markdown
 using InteractiveUtils
@@ -33,7 +33,7 @@ md"""
 
 # ╔═╡ 0d60f5d5-53d6-4014-af00-7a8b27a4a6a4
 md"""
-A funny quirck of Pluto is that stdoutput goes to the terminal, not to the notebook. Thus, if you use the function 'println()' for example, nothing will appear in the notebook but the result will be displayed in the terminal you launched Pluto from
+A funny quirk of Pluto is that stdoutput goes to the terminal, not to the notebook. Thus, if you use the function 'println()' for example, nothing will appear in the notebook but the result will be displayed in the terminal you launched Pluto from
 """
 
 # ╔═╡ c744a498-9d13-4dc3-9ede-e62190c72877
@@ -41,7 +41,7 @@ println("Pluto has a personality!")
 
 # ╔═╡ 2c8e97e9-1bd3-4c39-939a-62f621f62929
 md"""
-Plutonians insist in using interpolation rather than printing. If you need to print to the notebook, though, use 'with_terminal()' as below:
+Plutonians insist on using interpolation rather than printing. If you need to print to the notebook, though, use 'with_terminal()' as below:
 """
 
 # ╔═╡ 2c44ff3a-bb46-40d1-829e-17fd2b56daab
@@ -64,11 +64,11 @@ md"""
 
 # ╔═╡ 03e6bd29-4907-4807-984f-8d20ec1e0f7e
 md"""
-Remember that in Pluto variable are immutable. Thus if you assign a variable
+Remember that in Pluto variables are immutable. Thus if you assign a variable
 
 `my_variable = 69`
  
-then you cannot do in another cell:
+then you cannot do so in another cell:
  
 `my_variable = 100.`
 
@@ -92,7 +92,7 @@ You can find the type of your variable with `typeof()`
 
 # ╔═╡ dafdbdce-4689-4515-a0ef-0d80319a247f
 md"""
-If you define all your variables in the global scope (this is the default case), you will end up writing a large number of names (e.g., `my_variable1`, `my_variable2`) due to the inmutability rule. This may be inconvenient. However, many of the variables you need in a notebook are local (think of them as local to a function). Using let... end blocks allows you to reuse names.
+If you define all your variables in the global scope (this is the default case), you will end up writing a large number of names (e.g., `my_variable1`, `my_variable2`) due to the immutability rule. This may be inconvenient. However, many of the variables you need in a notebook are local (think of them as local to a function). Using let... end blocks allows you to reuse names.
 """
 
 # ╔═╡ 9914d6c7-a94c-4a96-92fc-fe6f11a55212
@@ -107,7 +107,7 @@ end
 
 # ╔═╡ 446722a6-e08e-4bfa-9ba5-ed5518c1ef25
 md"""
-Here, outside the let block the value of `my_variable` is still $my_variable and its type is still $(typeof(my_variable)). This is because the definition of `my_variable` (the last variable in the let block) gets exported to the global scope
+Here, outside the let block the value of `my_variable` is still $my_variable and its type is still $(typeof(my_variable)). This is because the only the last line of a block is returned to global scope (the markdown here) .
 """
 
 # ╔═╡ 7ffb251d-a155-44fb-a0d5-75d5c33a4c9d
@@ -154,7 +154,7 @@ The type of 'c' is $(typeof('c'))
 md"""
 ## Strings
 
-We have already encountered strings and string interpolation. Strings are a fundamental type in Julia. Antyhing between double quotes is string (instead, single quotes are used to define characters, like in C and unlike in Python). Strings can be concatenated using the function `string()`. Let's see a few examples below.
+We have already encountered strings and string interpolation. Strings are a fundamental type in Julia. Antyhing between double quotes is a string with single quotes are used to define characters, like in C and unlike in Python. Strings can be concatenated using the function `string()`. Let's see a few examples below.
 """
 
 # ╔═╡ d16099c4-1004-4354-9fab-dbb2c748414d
@@ -163,7 +163,7 @@ string("Hello", " World")
 # ╔═╡ fe35a4e4-339c-4621-8fd0-a869ca997800
 md"""
 
-Notice that we can turn a variable that admits interpolation into a string by as below:
+Notice that we can turn a variable that admits interpolation into a string using the functionality below:
 """
 
 # ╔═╡ 921d1e6c-28be-4dc0-9a42-e0c8da8c0211
@@ -269,7 +269,7 @@ md"""
 md"""
 ## Tuples
 
-Tuples are inmmutable ordered sequence of elements. Let's see an example:
+Tuples are immutable ordered sequences of elements. Let's see an example:
 """
 
 # ╔═╡ 6cc27225-29a3-4394-900c-018f479bf4b0
@@ -364,7 +364,7 @@ typeof(mixed_array)
 md"""
 ### Arrays are lists: Access elements, `push!` and `pop!`
 
-Try and access elements of the above arrays by index (hint: same than tuples). Notice that our mixed array resembles very much a Python list, that is an ordered collection of elements, which can have any specific type. 
+Try and access elements of the above arrays by index (hint: same as for tuples). Notice that our mixed array resembles a Python list, that is an ordered collection of elements, which can have any specific type. 
 
 Pretty much in the spirit of lists (all the way back to LISP), we can push and pop elements of an array in Julia. However notice the syntax (`push!` and `pop!`). The exclamation mark (`!`) is used in Julia as a convention when the function modifies the contents of the structure, in this case the array (or more in general to denote that the function has side effects). `push!` adds an element to the end of an array and `pop!` removes the last element of an array.
 """
@@ -405,7 +405,7 @@ size(a1d1)
 
 # ╔═╡ 91ba3e7b-8af3-49eb-b5f4-4b2f69c63ade
 md"""
-Notice that `a1d`and `a1d1`are both 1D arrays. The funcion `size`tells us that they have a single dimension, with length 5 in the first case and 3 in the second. On the other han, each element of a1d is an Int64 (we can see this by looking at the `typeof(a1d)`) while each element of a1d1 is in itself an Array of Int64, as revelated by `typeof(a1d1)`.
+Notice that `a1d`and `a1d1`are both 1D arrays. The funcion `size`tells us that they have a single dimension, with length 5 in the first case and 3 in the second. On the other hand, each element of a1d is an Int64 (we can see this by looking at the `typeof(a1d)`) while each element of a1d1 is in itself an Array of Int64, as revelated by `typeof(a1d1)`.
 
 We can access the elements of `a1d1` by index as expected:
 """
@@ -423,7 +423,7 @@ a1d1[1][2]
 md"""
 ### Arrays : 2D
 
-In Julia A 2D array is a representation of items in the form of rows and columns. Unlike Vectors, 2D arrays are a tabular (or Matrix like) representation of data. A 2D array can be created by separating elements in a row with a blank space and rows with a semicolon:
+In Julia a 2D array is a representation of items in the form of rows and columns. Unlike Vectors, 2D arrays are a tabular (or Matrix like) representation of data. A 2D array can be created by separating elements in a row with a blank space and rows with a semicolon:
 """
 
 # ╔═╡ b0f4df4d-92cc-4160-b252-2568fd1ce212
@@ -434,13 +434,12 @@ size(A)
 
 # ╔═╡ 9ad1712b-1ac4-4d3e-a07e-6a71e2ce2211
 md"""
-Notice the type and the size! We have defined a 2 x 2 Matrix. We can now access the elements either linearly (in this case the index runs thrugh the for elements of the matrix) or by row and column:
+Notice the type and the size! We have defined a 2 x 2 Matrix. We can now access the elements either linearly (in this case the index runs through the elements of the matrix column by column) or by row and column:
 """
 
 # ╔═╡ c9732c0b-1632-4faf-9d4d-ddce3943f733
 with_terminal() do
 	for i in 1:4
-	
 		println("A[",i,"]=",A[i])
 	end
 end
@@ -509,7 +508,7 @@ A3D[1:2,1:2,1]
 md"""
 ### Updating elements
 
-Since arrays are mutable structures it is possible to update its elements. 
+Since arrays are mutable structures it is possible to update their elements. 
 """
 
 # ╔═╡ f35c81d4-6e8c-4271-9655-60f573a22c26
@@ -643,7 +642,7 @@ md"""Ooops! `A3D` has also changed, since `B3D` who was a reference to it change
 
 
 # ╔═╡ 7346873e-a22e-46a4-9eb6-fad6b5713aa0
-md"Ooops! `A3D` has also changed, since `B3D` who was a reference to it changed. So if you want to avoid chaning the original array (at the expense of time invested in copying) use function `copy`"
+md"Ooops! `A3D` has also changed, since `B3D` which was a reference to it changed. So if you want to avoid changing the original array (at the expense of time invested in copying) use function `copy`"
 
 # ╔═╡ 65a09c10-d2d1-408e-8616-952b3e2c165b
 C3D = copy(A3D)
@@ -1108,7 +1107,7 @@ operate_on_rows_and_columns(5, 5, (x,y) -> x+y)
 
 # ╔═╡ 025f88d3-8a00-4e18-b536-fced8b8605f9
 md"""
-Terrific! We have used a `labmda function` (e.g., an anonymous function) to define the sum of the two indexes. Now, if we want to square them:
+Terrific! We have used a `lambda function` (e.g., an anonymous function) to define the sum of the two indices. Now, if we want to square them:
 """
 
 # ╔═╡ 15a5bba7-de92-43f2-862f-bd08bab16afc
@@ -1127,12 +1126,12 @@ end
 
 # ╔═╡ 3352db35-be56-438c-9761-ab684d3f7fd1
 md"""
-Try now to call the function making the same mistake thatn before. Julia will refuse to call `operate_on_rows_and_columns2` with a `Flota64`. We have explicitely declared that `m` and `n` must be integers (specifically `Int64`) and the compiler won't allow otherwise. 
+Try now to call the function making the same mistake as before. Julia will refuse to call `operate_on_rows_and_columns2` with a `Flota64`. We have explicitely declared that `m` and `n` must be integers (specifically `Int64`) and the compiler won't allow otherwise. 
 """
 
 # ╔═╡ 4f7c345f-08f7-491a-b4d3-ba5adaa682c8
 md"""
-But suppose that you are sooo sloppy that typos happen once and again. ¿Is there a way that you can protect yourself against your sloppiness? The answer is Yes. Meet Julia's multiple dispatch.
+But suppose that you are so sloppy that typos happen time and again. Is there a way that you can protect yourself against your sloppiness? The answer is Yes. Meet Julia's multiple dispatch.
 """
 
 # ╔═╡ e920fc66-7a74-412e-88a5-8509dd29f64d
@@ -1156,7 +1155,7 @@ operate_on_rows_and_columns2(5.0, 5.0, (x,y) -> x^2+y^2)
 # ╔═╡ 133de5fe-2ac0-4fd1-96a8-6bbb572b8860
 md"""
 OK, now you are allowed to be sloppy (at your risks and perils). Notices that the
-function `operate_on_rows_and_columns2` is now a "generic function with 4 methods". The magic of Julias's multiple dispatch works like this:
+function `operate_on_rows_and_columns2` is now a "generic function with 4 methods". The magic of Julia's multiple dispatch works like this:
 
 - Our first method defined a function in which the two dimensions were integers. When we call the function with two integers as arguments, julia will look for that particular method and will instantiate it.
 - Methods 2,3 and 4 defined a function in which one of the two arguments or both could be floats. In each case, we simply call the first method after casting the float to integer. Notice that if you are megasloppy and pass, say, 5.1, you will get a crash because you cannot cast 5.1 to an integer. 
@@ -1235,7 +1234,7 @@ PlutoUI = "~0.7.38"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.7.2"
+julia_version = "1.7.1"
 manifest_format = "2.0"
 
 [[deps.AbstractPlutoDingetjes]]
@@ -1442,21 +1441,21 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═85d79e69-faf6-42cf-9e70-00e4e6a517a6
 # ╟─6452d551-eae6-410f-a824-0d66aeec048b
 # ╟─9cb0b62b-1f52-452b-b895-a1174d834896
-# ╠═0d60f5d5-53d6-4014-af00-7a8b27a4a6a4
+# ╟─0d60f5d5-53d6-4014-af00-7a8b27a4a6a4
 # ╠═c744a498-9d13-4dc3-9ede-e62190c72877
 # ╟─2c8e97e9-1bd3-4c39-939a-62f621f62929
 # ╠═2c44ff3a-bb46-40d1-829e-17fd2b56daab
-# ╠═dda18475-3f32-4e05-be03-518abb492a91
+# ╟─dda18475-3f32-4e05-be03-518abb492a91
 # ╠═9092c9cf-d7aa-4eb6-a511-e1dd738ad488
 # ╟─a8d159d1-b820-48ed-a522-fab17ce897ee
-# ╠═03e6bd29-4907-4807-984f-8d20ec1e0f7e
+# ╟─03e6bd29-4907-4807-984f-8d20ec1e0f7e
 # ╠═94058bf4-29d1-4aeb-8f0f-252f0033560e
 # ╠═8052538f-12f3-46e4-b9e9-25310e0cc787
 # ╠═e13ebcee-cbaf-408b-9d77-3c84341fd187
 # ╟─aa4c31cf-b6c1-4bd7-a678-b3a7252ce215
 # ╟─dafdbdce-4689-4515-a0ef-0d80319a247f
 # ╠═9914d6c7-a94c-4a96-92fc-fe6f11a55212
-# ╠═446722a6-e08e-4bfa-9ba5-ed5518c1ef25
+# ╟─446722a6-e08e-4bfa-9ba5-ed5518c1ef25
 # ╠═7ffb251d-a155-44fb-a0d5-75d5c33a4c9d
 # ╟─8addc85a-bfad-45d0-b9e2-3ef53f2b73ee
 # ╟─4a64f90c-f24e-4e08-b6b8-bca655228aef
@@ -1468,14 +1467,14 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═1f55905c-889c-42d8-abf8-4b0cfb47f694
 # ╠═6ce94093-c5ba-42b1-af65-28bafec12b72
 # ╟─76330c85-34db-44f2-af47-0e81f61317af
-# ╠═70b8c375-c4a2-42f5-8ca2-bb42e9a37ab5
+# ╟─70b8c375-c4a2-42f5-8ca2-bb42e9a37ab5
 # ╟─5bcd7d59-b1b8-49bb-821c-47b441c3260d
 # ╟─8fb3aad2-ca3e-4f02-b058-c23c523f2b52
 # ╟─a71739cb-f275-4dab-85a3-2d23c917453e
 # ╟─4d50b919-41f6-4c9d-93b0-c10ad978baa5
 # ╠═f23b022d-2afe-4acf-bf39-3ddcb4c391fe
 # ╟─5b43cb05-d7f8-417f-9d72-dca740020f0e
-# ╠═50be58f7-a9ea-4c79-8f28-2b60cb1efe1a
+# ╟─50be58f7-a9ea-4c79-8f28-2b60cb1efe1a
 # ╟─e377dc75-6636-45e7-8425-97881099de5c
 # ╠═6cc27225-29a3-4394-900c-018f479bf4b0
 # ╟─3c145fa2-b572-45a0-b231-0985e68049e5
@@ -1526,7 +1525,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╠═5796b9ab-c4de-476c-8641-2998cf2d2dca
 # ╟─315d2f8b-e699-495e-8682-5480c5e6947d
 # ╠═70fb6792-f143-46e8-a53d-5c99e3013c60
-# ╠═035d9cd2-e4f7-425a-9201-2b249cd1eae5
+# ╟─035d9cd2-e4f7-425a-9201-2b249cd1eae5
 # ╠═993281dd-9808-4853-9796-dae242831871
 # ╠═0ee6f52f-f94b-4cc8-9df6-6ad22d7ee3ee
 # ╠═8b15a315-0778-4ec7-acd5-de444292c293
@@ -1567,7 +1566,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─0dca9cfc-a817-458b-91e2-12672726e11e
 # ╟─e2a2d49c-89da-47c1-ac02-53cc2b87889e
 # ╟─3c89bdad-2779-4c0d-ad9c-726438a64273
-# ╠═7346873e-a22e-46a4-9eb6-fad6b5713aa0
+# ╟─7346873e-a22e-46a4-9eb6-fad6b5713aa0
 # ╠═65a09c10-d2d1-408e-8616-952b3e2c165b
 # ╟─5cd817ea-6773-4226-96a0-e90055db9c23
 # ╠═c90ca787-029f-4460-92d7-96d563472c5b
