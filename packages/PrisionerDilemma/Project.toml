@@ -1,0 +1,9 @@
+name = "PrisionerDilemma"
+uuid = "7e47d14c-ac7f-45af-88a2-3f24d874d90c"
+authors = ["Alberto Ramos <alberto.ramos@ific.uv.es>"]
+version = "0.1.0"
+
+[deps]
+PGFPlotsX = "8314cec4-20b6-5062-9cdb-752b83310925"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
