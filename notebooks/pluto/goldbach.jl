@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.5
+# v0.18.1
 
 using Markdown
 using InteractiveUtils
@@ -10,7 +10,7 @@ using BenchmarkTools, PlutoUI, Plots
 # ╔═╡ 629b6656-c549-11ec-3e3b-a7bcc12041bc
 md"# Child's problems
 
-We will start our Julia journey by using prime numbers as a first example. First we need a routine that tell us when a number is prime (i.e. only divisible by itself and 1). Let's start with a straightforward implementation (check elementary operations at [julia website](https://docs.julialang.org/en/v1/manual/mathematical-operations/))
+We will start our Julia journey by using prime numbers as a first example. First we need a routine that tells us when a number is prime (i.e. only divisible by itself and 1). Let's start with a straightforward implementation (check elementary operations at [julia website](https://docs.julialang.org/en/v1/manual/mathematical-operations/))
 "
 
 # ╔═╡ ccf482e4-a37e-4414-b9ea-85274f27fae3
@@ -42,7 +42,7 @@ end
 md"## Problems with this implementation:
 This program works, but...
 - The argument of `isprime1` can be anything. What if we try a real number? (the routine can give wrong results!)
-- It is very innefficient.
+- It is very inefficient.
 
 ### Computers never makes mistakes
 
@@ -62,7 +62,7 @@ typeof(16)
 typeof(2.34)
 
 # ╔═╡ 180c05f3-c769-41ab-9326-d2d1afbd9fbe
-md"But there are other ingeers: "
+md"But there are other integers: "
 
 # ╔═╡ 41613d6e-83c2-43ec-952c-a6595763dea5
 subtypes(Integer)
@@ -177,7 +177,7 @@ md"## Curious things about primes
 Let's define the prime counting function:
 
 ```math
-\pi(x) = \text{Number of prime numbers smaller of equal than x} 
+\pi(x) = \text{Number of prime numbers smaller or equal to x} 
 ```
 "
 
@@ -185,11 +185,11 @@ Let's define the prime counting function:
 """
 	prime_counting(x)
 
-Count number of primes smaller of equal than `abs(x)`
+Count number of primes smaller or equal to `abs(x)`
 """
 function prime_counting(x)
 
-	ix = trunc(Int64, abs(x))
+	ix = trunc(Int64, x)
 	n = 0
 	for i in 2:ix
 		if isprime4(i)
@@ -232,7 +232,7 @@ md"Now we need to apply the method `prime_couting` to each element of `x`. Use `
 md"Plot the difference with the asymptotic prediction (note more `dot` notation)"
 
 # ╔═╡ 59eae3b3-b808-4a52-88aa-0ae55ddbf065
-md"Our `prime_couting` function is very innefficient. It is better to keep the primes already computed in a list. Let's try a better approach.
+md"Our `prime_couting` function is very inefficient. It is better to keep the primes already computed in a list. Let's try a better approach.
 
 We define another version of `prime_counting` that has two arguments. The second is a list of ordered primes, that are reused. If needed the list is increased."
 
@@ -244,7 +244,7 @@ Returns the prime couting of `x`. When a list of primes is passed, it is used. W
 """
 function prime_counting(x, plist)
 
-	ie = trunc(Int64, abs(x))
+	ie = trunc(Int64, x)
 	if length(plist) == 0 # empty list, start at prime 2
 		is = 2
 	else 
@@ -826,7 +826,7 @@ uuid = "38a345b3-de98-5d2b-a5d3-14cd9215e700"
 version = "2.36.0+0"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[LogExpFunctions]]
@@ -888,6 +888,10 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "887579a3eb005446d514ab7aeac5d1d027658b8f"
 uuid = "e7412a2a-1a6e-54c0-be00-318e2571c051"
 version = "1.3.5+1"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 
 [[OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -977,7 +981,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[RecipesBase]]
@@ -1284,6 +1288,10 @@ git-tree-sha1 = "5982a94fcba20f02f42ace44b9894ee2b140fe47"
 uuid = "0ac62f75-1d6f-5e53-bd7c-93b484bb37c0"
 version = "0.15.1+0"
 
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
+
 [[libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "daacc84a041563f965be61859a36e17c4e4fcd55"
@@ -1331,19 +1339,19 @@ version = "0.9.1+5"
 
 # ╔═╡ Cell order:
 # ╠═45633f0c-2630-497b-ae4f-278d478e4f6d
-# ╠═629b6656-c549-11ec-3e3b-a7bcc12041bc
+# ╟─629b6656-c549-11ec-3e3b-a7bcc12041bc
 # ╠═ccf482e4-a37e-4414-b9ea-85274f27fae3
 # ╠═12714170-ae85-49a5-9851-da981bd2742f
-# ╠═3145bf16-7448-4c34-9701-8dc8bb6dc94b
+# ╟─3145bf16-7448-4c34-9701-8dc8bb6dc94b
 # ╠═fe40ce06-af5b-4f35-b9b2-723605b2fbe5
-# ╠═dd7e97d0-352c-4491-a2ef-7c56a8c8eed3
+# ╟─dd7e97d0-352c-4491-a2ef-7c56a8c8eed3
 # ╠═c7685188-8ebf-4c78-a883-32398defeec0
 # ╠═4c4a891a-df82-4daf-b53b-0b5cb9ddf1ae
-# ╠═180c05f3-c769-41ab-9326-d2d1afbd9fbe
+# ╟─180c05f3-c769-41ab-9326-d2d1afbd9fbe
 # ╠═41613d6e-83c2-43ec-952c-a6595763dea5
 # ╠═25a0e3ce-c633-4fe2-9749-cc7577f48937
 # ╠═699f421b-12d8-44f3-b931-2c7fa9b51a57
-# ╠═63a118de-7f4a-4d50-857b-c83cac0cf2e5
+# ╟─63a118de-7f4a-4d50-857b-c83cac0cf2e5
 # ╠═caf5d3e4-f61b-4bc5-9ddd-bf84eb0ce544
 # ╠═2a26bc7b-60f2-48f4-b379-5aaa8181265f
 # ╠═90dc4f91-eac3-4e2b-8876-4657ca492528
@@ -1362,7 +1370,7 @@ version = "0.9.1+5"
 # ╠═b80c088b-61e7-4500-9b90-b92993151260
 # ╠═c2b0205b-edee-43d9-87b3-c9400e5089ca
 # ╠═d1b53736-9705-43ce-a72c-d9dfb2f4e47b
-# ╠═2f901ef8-7569-480a-8510-f1b10a981bdd
+# ╟─2f901ef8-7569-480a-8510-f1b10a981bdd
 # ╠═5cdd84cd-f841-4725-90fe-8b5caf5a25b6
 # ╠═d48a130c-d880-4475-b370-60a3b4407003
 # ╠═e35daa27-856d-4ac6-9589-e64f3bc203dc
