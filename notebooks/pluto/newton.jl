@@ -295,6 +295,18 @@ let
 	surface(-1.0:0.0025:1.0, -1.0:0.0025:1.0, tr, zaxis=:log, camera=(45,80), c = cgrad(:prism, scale=:log))
 end
 
+# ╔═╡ 1f8281a6-24aa-478c-b9b2-e694ae18dcb7
+md"## Creating a package
+
+This Newton utility seems very useful. Let's keep it just in case. These are the steps to create a package:
+- `pkg> generate MixedUtils`
+- Add code. Separate in files and use `include(\"Bla.jl\")`
+- Export useful routines
+- Add tests: `pkg> activate ./test` and `add Test`
+- Write some tests in `test/runtests.jl`.
+- Test the package with `pkg> test`
+"
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -1250,5 +1262,6 @@ version = "0.9.1+5"
 # ╠═85dc79f3-7791-4c82-9349-807bdad45e0f
 # ╠═2a0f155f-5bd6-4192-97a7-fe4ad6073c0d
 # ╠═387dbca7-26b1-4fab-a6e9-c3f0ae67c6e3
+# ╠═1f8281a6-24aa-478c-b9b2-e694ae18dcb7
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
