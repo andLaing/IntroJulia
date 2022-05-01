@@ -292,7 +292,7 @@ end
 # ╔═╡ 387dbca7-26b1-4fab-a6e9-c3f0ae67c6e3
 let 
 	tr = newton_fractal_iterations(x -> (x^3 -1, 3*x^2), -1.0:0.0025:1.0, -1.0:0.0025:1.0)
-	surface(-1.0:0.0025:1.0, -1.0:0.0025:1.0, tr, zaxis=:log, camera=(45,80), c = cgrad(:prism, scale=:log))
+	surface(-1.0:0.0025:1.0, -1.0:0.0025:1.0, tr, camera=(45,80), c = cgrad(:prism, scale=:log))
 end
 
 # ╔═╡ 1f8281a6-24aa-478c-b9b2-e694ae18dcb7
