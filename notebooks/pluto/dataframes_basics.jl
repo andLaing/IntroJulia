@@ -276,10 +276,14 @@ end
 
 # ╔═╡ 5ddfb944-c4fb-48a0-8131-7dff6bcbe980
 begin
+	PLT = []
 	for (key, grp) in pairs(groupby(iris_with_corr, :Species))
 		h = fit(Histogram, grp.PetalWidth, LinRange(extrema(grp.PetalWidth)..., 10))
-		println(@isdefined pl1)
-		pl1 = combine_plots(collect(h.edges[1][2:end]), h.weights, label=string(key.Species), pl=((@isdefined pl1) ? pl1 : nothing))
+		if length(PLT) == 0
+			push!(PLT, combine_plots(collect(h.edges[1][2:end]), h.weights, label=string(key.Species)))
+		else
+			PLT[1] = combine_plots(collect(h.edges[1][2:end]), h.weights, label=string(key.Species), pl=PLT[1])
+		end
 	end
 	current()
 	#plot(pl1)
@@ -288,13 +292,24 @@ begin
 end
 
 # ╔═╡ a5437b5b-6c3e-4cfc-8cd6-113a4d0b57b9
-@df iris_with_corr scatter(
-    :SepalLength,
-    :SepalWidth,
-    group = :Species,
-    m = (0.5, [:+ :h :star7], 12),
-    bg = RGB(0.2, 0.2, 0.2)
-)
+begin
+	@df iris_with_corr scatter(
+	    :SepalLength,
+	    :SepalWidth,
+	    group = :Species,
+	    m = (0.5, [:+ :h :star7], 12),
+	    bg = RGB(0.2, 0.2, 0.2)
+	)
+	xlabel!("Sepal length (mm)")
+	ylabel!("Sepal width (mm)")
+end
+
+# ╔═╡ 14f51d80-9be3-418c-b7e3-dda70ec3b5c5
+md"## _6. Other input types_
+
+There are many data formats that can be read easily into DataFrames and almost anything that gives you a table of data can be used to construct a DataFrame.
+
+See [here](https://dataframes.juliadata.org/stable/man/importing_and_exporting/#Other-formats) for some examples."
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1519,7 +1534,7 @@ version = "0.9.1+5"
 # ╟─cad829aa-51c5-4528-9737-192ed3ff51ad
 # ╠═1ec739d5-15d5-43ba-b41a-db741c0d675c
 # ╟─4a14c49f-b965-4c7c-88e8-2f350847ed88
-# ╠═871c71ce-215a-4741-9a86-eb7806a49c85
+# ╟─871c71ce-215a-4741-9a86-eb7806a49c85
 # ╠═52e4bbd9-c05a-4431-b74b-32d2a7504a10
 # ╟─0d43056a-475f-47e3-ae3a-dc32d8e55507
 # ╠═9c552660-de93-45db-bce4-eb022e913ce5
@@ -1532,11 +1547,11 @@ version = "0.9.1+5"
 # ╟─c07e3cc1-9d75-44e7-82bb-e1d1519ebf7d
 # ╠═389407c9-c366-495f-8538-acfef56881d5
 # ╠═2a5ec8fc-8dab-4009-ab17-ee374d316df5
-# ╠═59e8e6dc-acd2-40f3-86ec-55f0cf6d8e80
+# ╟─59e8e6dc-acd2-40f3-86ec-55f0cf6d8e80
 # ╠═9ea2b223-621c-4310-9f04-0ca50d90e6b0
 # ╟─e50858de-85e5-40f8-9c6a-f69db0b94008
 # ╠═83477b92-6bae-4aa0-819f-579ee7fca6f0
-# ╠═74f80681-6a15-4417-a468-9cfda3dc1fe0
+# ╟─74f80681-6a15-4417-a468-9cfda3dc1fe0
 # ╠═420e409b-e66e-4880-828a-9c77e06491a9
 # ╟─35c763f0-8248-49cd-a5e4-118e0743ad73
 # ╟─60df44af-03b7-44d2-9415-2d2e0a2913b4
@@ -1567,5 +1582,6 @@ version = "0.9.1+5"
 # ╠═5ddfb944-c4fb-48a0-8131-7dff6bcbe980
 # ╠═5d5cf546-e057-4422-b126-d72263aa2097
 # ╠═a5437b5b-6c3e-4cfc-8cd6-113a4d0b57b9
+# ╟─14f51d80-9be3-418c-b7e3-dda70ec3b5c5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
