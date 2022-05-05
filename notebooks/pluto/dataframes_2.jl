@@ -71,7 +71,7 @@ sort(hits, [:time])
 sort(hits, [:event_id, :time])
 
 # ╔═╡ 2f404020-ecbd-473d-aace-49eb5e9933b5
-md"# _4. Challenge_
+md"## _4. Challenge_
 
 Let's be armchair epidemiologists!
 
@@ -460,6 +460,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─b905416d-9403-4f6d-8f11-5a1fddd70e98
 # ╠═5985eaf8-a9ea-4dd5-9a8e-02bca667978f
 # ╠═f2091898-a9ee-4534-bf9b-d41b23ff97dc
-# ╟─2f404020-ecbd-473d-aace-49eb5e9933b5
+# ╠═2f404020-ecbd-473d-aace-49eb5e9933b5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
